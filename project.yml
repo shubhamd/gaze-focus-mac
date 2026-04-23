@@ -1,0 +1,84 @@
+name: GazeFocus
+
+options:
+  bundleIdPrefix: com.shubhamdesale
+  deploymentTarget:
+    macOS: "13.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: 38M5GTQP8K
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.9"
+    ENABLE_HARDENED_RUNTIME: YES
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_STRICT_CONCURRENCY: minimal
+    CLANG_ENABLE_MODULES: YES
+  configs:
+    # MVP: ad-hoc signing for local dev. Swap to a real Developer ID cert in R5.
+    Debug:
+      CODE_SIGN_IDENTITY: "-"
+      CODE_SIGNING_REQUIRED: "NO"
+      CODE_SIGNING_ALLOWED: "NO"
+    Release:
+      CODE_SIGN_IDENTITY: "-"
+      CODE_SIGNING_REQUIRED: "NO"
+      CODE_SIGNING_ALLOWED: "NO"
+
+targets:
+  GazeFocus:
+    type: application
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: GazeFocus
+        excludes:
+          - "**/*.md"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.shubhamdesale.gazefocus
+        PRODUCT_NAME: GazeFocus
+        INFOPLIST_FILE: GazeFocus/App/GazeFocus-Info.plist
+        CODE_SIGN_ENTITLEMENTS: GazeFocus/App/GazeFocus.entitlements
+        ENABLE_APP_SANDBOX: NO
+        COMBINE_HIDPI_IMAGES: YES
+        LD_RUNPATH_SEARCH_PATHS:
+          - "@executable_path/../Frameworks"
+    dependencies: []
+
+  GazeFocusTests:
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: GazeFocusTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.shubhamdesale.gazefocus.tests
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/GazeFocus.app/Contents/MacOS/GazeFocus"
+    dependencies:
+      - target: GazeFocus
+
+schemes:
+  GazeFocus:
+    build:
+      targets:
+        GazeFocus: all
+        GazeFocusTests: [test]
+    test:
+      targets:
+        - GazeFocusTests
+      gatherCoverageData: true
+    run:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

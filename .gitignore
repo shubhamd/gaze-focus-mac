@@ -1,0 +1,39 @@
+# Xcode build artifacts
+build/
+DerivedData/
+*.xcodeproj/
+*.xcworkspace/
+
+# xcuserdata lives under xcodeproj but extra defensive:
+xcuserdata/
+*.xcuserdatad/
+*.xcuserstate
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode/
+.idea/
+
+# Fastlane / signing
+*.mobileprovision
+*.p12
+*.cer
+
+# Output
+*.dmg
+*.app.zip
+
+# Coverage / profiling output
+*.profraw
+
+# Ad-hoc screenshots (not part of source history)
+Screenshot*.png
