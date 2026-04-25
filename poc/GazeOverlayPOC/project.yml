@@ -1,0 +1,61 @@
+name: GazeOverlayPOC
+
+options:
+  bundleIdPrefix: com.shubhamdesale
+  deploymentTarget:
+    macOS: "13.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+settings:
+  base:
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.9"
+    ENABLE_HARDENED_RUNTIME: YES
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_STRICT_CONCURRENCY: minimal
+    CLANG_ENABLE_MODULES: YES
+  configs:
+    Debug:
+      CODE_SIGN_IDENTITY: "-"
+      CODE_SIGNING_REQUIRED: "NO"
+      CODE_SIGNING_ALLOWED: "NO"
+    Release:
+      CODE_SIGN_IDENTITY: "-"
+      CODE_SIGNING_REQUIRED: "NO"
+      CODE_SIGNING_ALLOWED: "NO"
+
+targets:
+  GazeOverlayPOC:
+    type: application
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: Sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.shubhamdesale.gazeoverlaypoc
+        PRODUCT_NAME: GazeOverlayPOC
+        INFOPLIST_FILE: Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Resources/POC.entitlements
+        ENABLE_APP_SANDBOX: NO
+        COMBINE_HIDPI_IMAGES: YES
+        LD_RUNPATH_SEARCH_PATHS:
+          - "@executable_path/../Frameworks"
+    dependencies: []
+
+schemes:
+  GazeOverlayPOC:
+    build:
+      targets:
+        GazeOverlayPOC: all
+    run:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
